@@ -1,14 +1,89 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgre
+  name: postgre 
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: postgre
   template:
     metadata:
       labels:
-        app: postgre
+        app: postgre 
     spec:
       containers:
+      - name: postgre 
+        image: postgres:14.3 
+        ports:
+        - containerPort: 5432 
+        env:
+            - name: POSTGRES_PASSWORD
+              value: "kube#123"
+            - name: POSTGRES_USER
+              value: "kubenews"
+            - name: POSTGRES_DB
+              value: "kubenews"
+
+---
+# como o banco de dados dever ser acessivel para a aplicacao, vamos criar o service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgre
+  labels:
+    app: postgre 
+spec:
+  type: NodePort
+  ports:
+  - port: 5432
+    targetPort: 5432
+    #nodePort: 30080
+  selector:
+    app: postgre 
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubenews
+spec:
+  selector:
+    matchLabels:
+      app: kubenews
+  template:
+    metadata:
+      labels:
+        app: kubenews
+    spec:
+      containers:
+      - name: kubenews
+        image: cabicho/kube-news:v1 
+        ports:
+        - containerPort: 5432 
+        env:
+            - name: DB_DATABASE
+              value: "kubenews"
+            - name: DB_PASSWORD
+              value: "kube#123"
+            - name: DB_USERNAME
+              value: "kubenews"
+            - name: DB_HOST
+              value: "postgre"
+---
+# expondo a aplicacao
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-news
+spec:
+  selector:
+    app: kubenews
+  ports:
+  - port: 80
+    targetPort: 8080 # a porta que a aplicacao e expota no Dockerfile.EXPOSE
+    #como estamos usando o k3d, o foi expecificado que vai-se usar a porta 30000
+    #k3d cluster create mycluster --servers 3 --agents 3 -p "30000:30000@loadbalancer"
+    nodePort: 30000
+  type: NodePort
