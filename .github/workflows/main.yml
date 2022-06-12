@@ -27,6 +27,7 @@ jobs:
         uses: docker/login-action@v2.0.0
         with:
           # Username used to log against the Docker registry
+          # https://github.com/cabicho/kube-news/settings/secrets/actions/new
           username: ${{secrets.DOCKERHUB_USER}}
           # Password or personal access token used to log against the Docker registry
           password: ${{secrets.DOCKERHUB_PWD}}
