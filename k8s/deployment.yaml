@@ -86,4 +86,4 @@ spec:
     #como estamos usando o k3d, o foi expecificado que vai-se usar a porta 30000
     #k3d cluster create mycluster --servers 3 --agents 3 -p "30000:30000@loadbalancer"
     nodePort: 30000
-  type: NodePort
+  type: LoadBalancer # LoadBalancer #NodePort
