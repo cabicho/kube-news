@@ -39,7 +39,7 @@ spec:
   ports:
   - port: 5432
     targetPort: 5432
-    #nodePort: 30080
+    # nodePort: 30080
   selector:
     app: postgre 
 
@@ -83,7 +83,7 @@ spec:
   ports:
   - port: 80
     targetPort: 8080 # a porta que a aplicacao e expota no Dockerfile.EXPOSE
-    #como estamos usando o k3d, o foi expecificado que vai-se usar a porta 30000
-    #k3d cluster create mycluster --servers 3 --agents 3 -p "30000:30000@loadbalancer"
+    # como estamos usando o k3d vai-se usar a porta 30000
+    # k3d cluster create mycluster --servers 3 --agents 3 -p "30000:30000@loadbalancer"
     nodePort: 30000
-  type: LoadBalancer # LoadBalancer #NodePort
+  type: NodePort #LoadBalancer # LoadBalancer #NodePort

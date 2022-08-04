@@ -1,16 +1,22 @@
-# indicando a imagem base
+# Indicando a imagem base e a tag garantido desse modo a idempotência
 FROM node:16.15.0
-# inddicando a pasta de trabalho
+
+# Indicando a pasta de trabalho
 WORKDIR /app
-# copiando apenas os ficheiros com as dependencias
+
+# Copiando apenas os ficheiros de dependências
 COPY package*.json ./
 
-# instalando o node , criando a pasta node_modules
+# A pasta node_modules é resultado da instalação
 RUN npm install	
 
-#copiando os restantes ficheiros ou pastas para a pasta de trabalho
+# Copiando os restantes ficheiros ou pastas para a pasta de trabalho
 COPY . .
+
+# As instruções abaixo não entram na camada
 # Expondo a porta
 EXPOSE 8080 
-# correndo o projecto
+
+# Correndo o projecto e só é executado quando é criado o container, 
 CMD ["node", "server.js"]
+# comando de inicializacao da app
