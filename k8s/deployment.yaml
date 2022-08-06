@@ -85,6 +85,6 @@ spec:
     targetPort: 8080 # a porta que a aplicacao e expota no Dockerfile.EXPOSE
     # como estamos usando o k3d vai-se usar a porta 30000
     # k3d cluster create mycluster --servers 3 --agents 3 -p "30000:30000@loadbalancer"
-    nodePort: 30000
+    nodePort: 30001 #The Service "kube-news" is invalid: spec.ports[0].nodePort: Invalid value: 30000: provided port is already allocated
   # Invalid value: 30000: provided port is already allocated
   type: LoadBalancer #NodePort
