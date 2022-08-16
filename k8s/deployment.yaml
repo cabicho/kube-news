@@ -59,7 +59,7 @@ spec:
     spec:
       containers:
       - name: kubenews
-        image: cabicho/kube-news:v1 
+        image: cabicho/django:v1
         #cabicho/django:v1
         #cabicho/kube-news:v1 
         ports:
