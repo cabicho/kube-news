@@ -59,9 +59,9 @@ spec:
     spec:
       containers:
       - name: kubenews
-        image: cabicho/django:v1
+        #image: cabicho/django:v1 # Error: Error: The process '/usr/local/bin/kubectl' failed with exit code 1
         #cabicho/django:v1
-        #cabicho/kube-news:v1 
+        image: cabicho/kube-news:v1 
         ports:
         - containerPort: 5432 
         env:
